@@ -9,7 +9,11 @@ install-tekton:
 
 install-tasks:
 	kubectl apply \
-		-f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml	 \
-		-f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golang-test/0.2/golang-test.yaml \
+		-f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml	     \
+		-f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golang-test/0.2/golang-test.yaml     \
 		-f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golangci-lint/0.2/golangci-lint.yaml
 
+install-resources:
+	kubectl apply \
+		-f pipeline.yaml \
+		-f pvc.yaml

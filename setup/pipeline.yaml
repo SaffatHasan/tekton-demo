@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: golang-pipeline
+  namespace: tekton-pipelines
+spec:
+  workspaces:
+    - name: pipeline-ws
+  tasks:
+    - name: clone 
+      params:
+        - name: url
+          value: https://github.com/SaffatHasan/tekton-demo.git
+        - name: revision
+          value: main
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-ws
+    - name: test
+      params:
+        - name: package
+          value: "./..."
+      taskRef:
+        name: golang-test
+      workspaces:
+        - name: source
+          workspace: pipeline-ws
+    - name: lint 
+      params:
+        - name: package
+          value: "."
+      taskRef:
+        name: golangci-lint
+      workspaces:
+        - name: source
+          workspace: pipeline-ws
